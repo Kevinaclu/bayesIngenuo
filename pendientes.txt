@@ -1,0 +1,4 @@
+- Falta discretar los valores numericos -ya
+- Que te indique que archivo estas subiendo -ya
+- Que te valide que sea del mismo dataset que estas cargando
+- Que cuando se suba un archivo externo se quede guardado en memoria del naivebayes, incluyendo la clase en el que se clasifico el nuevo record. -ya

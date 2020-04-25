@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Clasificador de bayes</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <p id="title">Clasificador Bayes Ingenuo</p>
+    <div class="container">
+
+        <div class="title-wrapper">
+            <p class="subtitle">Cargar dataset</p>
+            <input type="file" name="file" id="file" class="inputfile" accept=".csv" />
+            <label class="icons-order" for="file">
+                <i class="material-icons" id="adjunto">
+                    attach_file
+                </i>
+                <p>Cargar</p>
+
+            </label>
+            <p class="selected-dataset">
+                Archivo:
+                <span id="dataset-name">----</span>
+            </p>
+        </div>
+
+        <div class="content-wrapper">
+            <p class="subtitle">Pruebas</p>
+
+            <div id="group2" class="group">
+
+                <label class="radio">Mismo dataset
+                    <input type="radio" checked="checked" name="radio" id="same_dataset">
+                    <span class="check"></span>
+                </label>
+                <label>
+                    Porcentaje de entrenamiento
+                    <input id="input2" type="number" placeholder="PE" class="inputt" min="10" max="90"
+                        onkeypress="return false" step="10" value="10">
+                </label>
+
+            </div>
+
+
+            <div id="group1" class="group">
+
+                <label class="radio">Archivo de pruebas externo
+                    <input type="radio" name="radio" id="extern_dataset">
+                    <span class="check"></span>
+                </label>
+
+                <div>
+                    <input type="file" name="externFile" id="externFile" class="inputfilee" accept=".csv" />
+                    <label class="icons-order" for="externFile">
+                        <i class="material-icons" id="adjunto">
+                            attach_file
+                        </i>
+                        <p id="sub_cargar">Cargar</p>
+                    </label>
+                    <p>Archivo cargado:
+                        <span id="nombre-archivo">----</span>
+                    </p>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+
+        <div class="inputs-wrapper">
+            <label for="k">Intervalos de:</label>
+            <input id="k" type="number" placeholder="k" class="inputt" min="1" onkeypress="return false" value="1"
+                style="float: unset;">
+
+            <button id="btn2" onclick="Start()">Analisis ROC </button>
+        </div>
+
+    </div>
+
+    <div class="table">
+        <div class="header">
+        </div>
+
+        <div class="row">
+            <div class="row-title">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="results">
+        <div>
+            Precision: <span id="precision"></span>
+        </div>
+        <div>
+            Recall: <span id="recall"></span>
+        </div>
+        <div>
+            Medida F1: <span id="medidaF1"></span>
+        </div>
+        <div>
+            Accuracy: <span id="accuracy"></span>
+        </div>
+    </div>
+
+    <script src="NaiveBayes.js"></script>
+    <script src="utils.js"></script>
+</body>
+
+</html>
