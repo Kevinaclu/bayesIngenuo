@@ -82,8 +82,10 @@ function Start() {
 
 function MakeTable(object) {
     const table = document.getElementsByClassName("table")[0];
+    table.classList.add("showing-table");
     table.innerHTML =
         `
+        <p>Tabla de Resultados</p>
         <div class="header">
             <p>Seccion</p>
             ${
@@ -92,6 +94,7 @@ function MakeTable(object) {
         }).join('')
         }            
         </div>
+
     `;
 
     table.innerHTML += `
@@ -109,4 +112,22 @@ function MakeTable(object) {
         }).join('')
         }
     `;
+
+    table.innerHTML += `
+    
+    <div class="results">
+        <div>
+            Precision: <span id="precision"></span>
+        </div>
+        <div>
+            Recall: <span id="recall"></span>
+        </div>
+        <div>
+            Medida F1: <span id="medidaF1"></span>
+        </div>
+        <div>
+            Accuracy: <span id="accuracy"></span>
+        </div>
+    </div>
+    `; 
 }

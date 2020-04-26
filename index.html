@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <p id="title">Clasificador Bayes Ingenuo</p>
+    <!-- <p id="title">Clasificador Bayes Ingenuo</p> -->
     <div class="container">
+        <p class="subtitle">Clasificador Bayer Ingenuo</p>
 
         <div class="title-wrapper">
-            <p class="subtitle">Cargar dataset</p>
             <input type="file" name="file" id="file" class="inputfile" accept=".csv" />
             <label class="icons-order" for="file">
                 <i class="material-icons" id="adjunto">
@@ -23,13 +23,16 @@
 
             </label>
             <p class="selected-dataset">
-                Archivo:
-                <span id="dataset-name">----</span>
+                Archivo 
+                <span id="dataset-name"> ----</span>
             </p>
         </div>
 
-        <div class="content-wrapper">
-            <p class="subtitle">Pruebas</p>
+        <label for="k">Intervalos de  </label>
+        <input id="k" type="number" placeholder="k" class="intervalos" min="1" onkeypress="return false" value="1"
+            style="float: unset;">
+
+        <div class="opciones-wrapper">
 
             <div id="group2" class="group">
 
@@ -37,11 +40,13 @@
                     <input type="radio" checked="checked" name="radio" id="same_dataset">
                     <span class="check"></span>
                 </label>
-                <label>
-                    Porcentaje de entrenamiento
-                    <input id="input2" type="number" placeholder="PE" class="inputt" min="10" max="90"
+                <div class="row-text">
+                    <p>
+                        Porcentaje de entrenamiento
+                    </p>
+                    <input id="input2" type="number" placeholder="PE" class="intervalos" min="10" max="90"
                         onkeypress="return false" step="10" value="10">
-                </label>
+                </div>
 
             </div>
 
@@ -53,17 +58,18 @@
                     <span class="check"></span>
                 </label>
 
-                <div>
-                    <input type="file" name="externFile" id="externFile" class="inputfilee" accept=".csv" />
+                <div class="row-text">
+                    <p>Archivo cargado:
+                        <span id="nombre-archivo">----</span>
+                    </p>
+
+                    <input type="file" name="externFile" id="externFile" class="inputfile" accept=".csv" />
                     <label class="icons-order" for="externFile">
                         <i class="material-icons" id="adjunto">
                             attach_file
                         </i>
                         <p id="sub_cargar">Cargar</p>
                     </label>
-                    <p>Archivo cargado:
-                        <span id="nombre-archivo">----</span>
-                    </p>
                 </div>
             </div>
 
@@ -76,13 +82,7 @@
 
         </div>
 
-        <div class="inputs-wrapper">
-            <label for="k">Intervalos de:</label>
-            <input id="k" type="number" placeholder="k" class="inputt" min="1" onkeypress="return false" value="1"
-                style="float: unset;">
-
-            <button id="btn2" onclick="Start()">Analisis ROC </button>
-        </div>
+        <button id="btn2" onclick="Start()">Analisis ROC </button>
 
     </div>
 
@@ -95,22 +95,10 @@
 
             </div>
         </div>
+
     </div>
 
-    <div class="results">
-        <div>
-            Precision: <span id="precision"></span>
-        </div>
-        <div>
-            Recall: <span id="recall"></span>
-        </div>
-        <div>
-            Medida F1: <span id="medidaF1"></span>
-        </div>
-        <div>
-            Accuracy: <span id="accuracy"></span>
-        </div>
-    </div>
+
 
     <script src="NaiveBayes.js"></script>
     <script src="utils.js"></script>
