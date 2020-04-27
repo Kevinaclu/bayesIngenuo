@@ -64,10 +64,16 @@ function Start() {
             naive.setTrainingPercent(100);
             naive.loadExternDataset(externInfo);
         }
-    
-    
+
         naive.setK(k.value);
-        console.log(naive.equalFrecuency([0,1,2,3,3,4,5,6,7,7,7], 0));
+
+        if (document.getElementById('disc-ancho').checked) {
+            naive.isEqualWidth = true;
+        } else {
+            naive.isEqualWidth = false;
+        }
+
+        // console.log(naive.equalFrecuency([0,1,2,3,3,4,5,6,7,7,7], 0));
         // console.log(naive.intervals);
         naive.predict();
     

@@ -27,13 +27,9 @@ class NaiveBayes {
                 aux.sort((a, b) => a - b);
                 if (this.isEqualWidth){
                     this.equalWidth(aux, i);
+                    // this.equalFrecuency(aux, i); // Regresa un arreglo de arreglos con los indices de los datos ordenados y discretizados
                 } else {
                     this.equalFrecuency(aux, i); // Regresa un arreglo de arreglos con los indices de los datos ordenados y discretizados
-                    for (let j = 0; j < s.length; j++) {
-                        const interval = this.getInterval(i, s[j]);
-                        s[j] = interval;
-                        this.dataset[j][i] = interval;
-                    }
                 }
             }
         }
@@ -299,44 +295,28 @@ class NaiveBayes {
         this.intervals[index] = temp;
     }
 
+    /**Metodo que establece intervalos por la discretizacion por frecuencias */
     equalFrecuency(arr, index) {
         const len = arr.length;
         const n = Math.floor(len / this.k);
-        let temp = [];
-        const arrAux = [];
-        let aux = 0;
-        // for (let i = 1; i <= len; i++) {
-        //     temp.push(arr[i-1]);
-        //     if (i % n === 0) {
-        //         aux++;
-        //         if (aux === parseInt(this.k)) {
-        //             let res = len - i;
-        //             for (let j = 0; j < res; j++) {
-        //                 temp.push(arr[i-1+j]);
-        //             }
-        //         }
-        //         arrAux.push(temp);
-        //         temp = [];
-        //     }
-        // }
-        for (let i = 1; i <= len; i++) {
-            temp.push(i-1);
-            if (i % n === 0) {
-                aux++;
-                if (aux === parseInt(this.k)) {
-                    let res = len - i;
-                    for (let j = 0; j < res; j++) {
-                        temp.push(i+j);
-                    }
-                }
-                arrAux.push(temp);
-                temp = [];
-                if (aux === parseInt(this.k)) {
+
+        let arrAux = [];
+        for (let i = 0; i < this.k; i++) {
+            arrAux.push([]);
+            for (let j = i*n; j < (i+1)*n; j++) {
+                if (j >= len) {
                     break;
                 }
+                arrAux[i].push(parseFloat(arr[j]));
             }
         }
-        return arrAux;
+        const temp = [];
+        arrAux.forEach(element => {
+            let max = element[element.length - 1];
+            temp.push(max);
+        });
+        this.intervals[index] = (temp);
+
     }
 
     getAccuracy() {
