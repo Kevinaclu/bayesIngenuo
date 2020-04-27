@@ -142,8 +142,9 @@ html {
 
 .inputfile:focus + label,
 .inputfile + label:hover {
+       cursor: pointer;
        /* background-color: rgb(11, 177, 177); */
-       filter:brightness(1.1);
+       filter:brightness(1.2);
        /* border: 1px solid rgb(11, 177, 177); */
        transition: all 0.2s;
        color: white;
@@ -205,14 +206,20 @@ button {
        color: white;
        border-radius: 6px;
        transition: all 0.2s;
+       border-bottom: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
        /* background-color: rgb(11, 177, 177); */
        /* border: 1px solid rgb(11, 177, 177); */
-       font-size: 19px;
-       transform: scale(1.05);
+       /* font-size: 19px; */
+       /* transform: scale(1.05); */
+       
        transition: all 0.2s;
+}
+button:active{ 
+    transform: scale(0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
 }
 
 button:focus {
@@ -435,7 +442,20 @@ button:focus {
     float: right;
 }
 
+#btn2:hover{ 
+    /* transform: scale(1) !important; */
+    filter:brightness(1.1);
+
+}
+
 .showing-table{
     transform: scale(1);
     opacity: 1;
+}
+
+
+.row-items{ 
+       display:flex;
+       margin-top:4vh;
+       justify-content: space-around;
 }

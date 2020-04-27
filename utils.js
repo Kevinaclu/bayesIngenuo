@@ -55,28 +55,32 @@ externfileInput.addEventListener('change', readFile2);
 
 // hice dos readers pa agilizar las cosas
 function Start() {
+    try{ 
+        if (rbSame.checked) {
+            const trainingPercent = input2.value;
+            naive.setTrainingPercent(trainingPercent);
+            naive.externDataset = [];
+        } else if (rbExt.checked) {
+            naive.setTrainingPercent(100);
+            naive.loadExternDataset(externInfo);
+        }
+    
+    
+        naive.setK(k.value);
+        console.log(naive.equalFrecuency([0,1,2,3,3,4,5,6,7,7,7], 0));
+        // console.log(naive.intervals);
+        naive.predict();
+    
+        MakeTable(naive.matrix);
+        document.getElementById('accuracy').innerHTML = `${(naive.getAccuracy() * 100).toFixed(2)} %`;
+        document.getElementById('recall').innerHTML = `${(naive.getRecall() * 100).toFixed(2)} %`;
+        document.getElementById('precision').innerHTML = `${(naive.getPrecision() * 100).toFixed(2)} %`;
+        document.getElementById('medidaF1').innerHTML = `${(naive.getF1() * 100).toFixed(2)} %`;
 
-
-    if (rbSame.checked) {
-        const trainingPercent = input2.value;
-        naive.setTrainingPercent(trainingPercent);
-        naive.externDataset = [];
-    } else if (rbExt.checked) {
-        naive.setTrainingPercent(100);
-        naive.loadExternDataset(externInfo);
     }
+    catch(ex){
 
-
-    naive.setK(k.value);
-    console.log(naive.equalFrecuency([0,1,2,3,3,4,5,6,7,7,7], 0));
-    // console.log(naive.intervals);
-    naive.predict();
-
-    MakeTable(naive.matrix);
-    document.getElementById('accuracy').innerHTML = `${(naive.getAccuracy() * 100).toFixed(2)} %`;
-    document.getElementById('recall').innerHTML = `${(naive.getRecall() * 100).toFixed(2)} %`;
-    document.getElementById('precision').innerHTML = `${(naive.getPrecision() * 100).toFixed(2)} %`;
-    document.getElementById('medidaF1').innerHTML = `${(naive.getF1() * 100).toFixed(2)} %`;
+    }
 
 }
 
