@@ -12,13 +12,17 @@ class NaiveBayes {
     pruebaLength = 0;
     isEqualWidth = true;
 
+    externPredict = false;
 
     constructor() { }
 
     /**Metodo que verifica si hay algun atributo numerico, en caso de exista alguno utiliza el metodo de discretizacion por anchos iguales */
     verifyData() {
         this.splittedDataset = [];
-        this.shuffleArray(this.dataset);
+
+        if (!this.externPredict) {
+            this.shuffleArray(this.dataset);
+        }
         this.separateData();
         for (let i = 0; i < this.splittedDataset.length - 1; i++) {
             const s = this.splittedDataset[i];
@@ -61,6 +65,16 @@ class NaiveBayes {
 
     /**Metodo principal del clasificador en el cual realiza la clasificacion de bayes ingenuo a los datos a probar*/
     predict() {
+        // Matriz de confusion
+        for (let i = 0; i < this.class_values.length; i++) {
+            this.matrix[this.class_values[i]] = {};
+            for (let j = 0; j < this.class_values.length; j++) {
+                const classValue = this.class_values[j];
+                this.matrix[this.class_values[i]][classValue] = 0;
+            }
+        }
+        this.results = [];
+        // this.matrix = {};
         // this.splittedDataset = [];
         // this.shuffleArray(this.dataset);
         // this.separateData();
@@ -68,16 +82,18 @@ class NaiveBayes {
         console.log("Procesando datos...");
         console.log(this.dataset.length - this.getTrainingLength());
         if (this.externDataset.length > 0) {
-            this.pruebaLength += this.externDataset.length;
+            this.pruebaLength = this.externDataset.length;
             for (let i = 0; i < this.externDataset.length; i++) {
+                this.externPredict = true;
                 // console.log(`Dato ${i+1} de ${this.externDataset}`);
                 const dato = this.externDataset[i];
                 this.predictRow(dato);
                 this.dataset.push(dato);
             }
         } else {
-            this.pruebaLength += this.dataset.length - this.getTrainingLength();
+            this.pruebaLength = this.dataset.length - this.getTrainingLength();
             for (let i = this.getTrainingLength(); i < this.dataset.length; i++) {
+                this.externPredict = false;
                 // console.log(`Dato ${i+1} de ${this.dataset.length - this.getTrainingLength()}`);
                 const dato = this.dataset[i];
                 this.predictRow(dato);
@@ -103,14 +119,42 @@ class NaiveBayes {
             const class_length = this.separatedDataset[cv][0].length;
             let likelyhood = []; // presuncion
             let totalClassProb = 0; // probabilidad de clase
-            for (let i = 0; i < dato.length - 1; i++) {
-                const d = dato[i];
-                const sameClass = this.separatedDataset[cv][i].filter(cl => {
-                    return cl === d;
-                }).length;
-                likelyhood.push(sameClass / class_length);
+
+            if (this.externPredict) {
+                for (let i = 0; i < dato.length; i++) {
+                    const d = dato[i];
+                    let sameClass = [];
+                    if (isNaN(parseFloat(d)) === false) {
+                        let interval = this.getInterval(i, d);
+                        dato[i] = interval;
+                        sameClass = this.splittedDataset[i].filter((cl) => {
+                            return cl === interval;
+                        }).length;
+                        console.log("Same class =>", sameClass);
+                    } else {
+                        sameClass = this.separatedDataset[cv][i].filter((cl) => {
+                            return cl === d;
+                        }).length;
+                        console.log("Same class =>", sameClass);
+                    }
+                  
+                    likelyhood.push(sameClass / class_length);
+                }
+            } else {
+                for (let i = 0; i < dato.length - 1; i++) {
+                    const d = dato[i];
+                    const sameClass = this.separatedDataset[cv][i].filter(cl => {
+                        return cl === d;
+                    }).length;
+                    likelyhood.push(sameClass / class_length);
+                }
+
             }
+
+
+
             likelyhood = likelyhood.reduce((a, b) => a * b);
+            console.log(likelyhood);
             totalClassProb = class_length / this.splittedDataset[0].length;
 
             probs.push({ probability: likelyhood * totalClassProb, class: cv });
@@ -133,7 +177,9 @@ class NaiveBayes {
         // if (!finded) {
             // this.matrix[result.predictedClass][result.predictedClass] += 1;    
         // } else {
+        if (!this.externPredict) {
             this.matrix[result.predictedClass][result.realClass] += 1;
+        }
         // }
         // if (result.realClass !== result.predictedClass) {
         //     this.matrix[result.predictedClass][result.realClass] += 1;
@@ -147,6 +193,10 @@ class NaiveBayes {
         this.splittedDataset.forEach((attr, i) => {
             attr.push(dato[i]);
         });
+
+        if (this.externPredict) {
+            dato.push(result.predictedClass);
+        }
     }
 
     /**Metodo que establece el porcentaje de entrenamiento */
@@ -330,7 +380,8 @@ class NaiveBayes {
         }
 
         const correctTotal = corrects.reduce((a, b) => a + b);
-        const accuracy = correctTotal / this.pruebaLength
+        console.log(correctTotal);
+        const accuracy = correctTotal / this.pruebaLength;
         return accuracy;
     }
 
