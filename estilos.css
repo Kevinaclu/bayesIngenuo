@@ -43,7 +43,7 @@ html {
        
        background-color: white;
        border: 1px solid lightgrey;
-       padding: 1vh 3%;
+       padding: 6px 13px;
        align-items: center;
        display: flex;
        flex-direction: column;
@@ -440,6 +440,8 @@ button:focus {
 
 #btn2{
     float: right;
+    margin:0px 5px;
+    cursor: pointer;
 }
 
 #btn2:hover{ 
@@ -458,4 +460,30 @@ button:focus {
        display:flex;
        margin-top:4vh;
        justify-content: space-around;
+}
+.prediction-table{
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 25vh;
+    overflow-y: auto;
+    background-color:rgba(0, 0, 0, 0.1);
+    /* background-color:var(--primary-color); */
+    border-radius: 4px;
+    padding:8px 5px;
+    /* color:white; */
+}
+
+.prediction-row{
+    margin:2px 0px;
+    display:flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+     
+}
+
+.prediction-row > p{
+    text-align: center;
+    width: 100px;
 }

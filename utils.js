@@ -76,13 +76,30 @@ function Start() {
         // console.log(naive.equalFrecuency([0,1,2,3,3,4,5,6,7,7,7], 0));
         // console.log(naive.intervals);
         naive.predict();
-    
-        MakeTable(naive.matrix);
-        document.getElementById('accuracy').innerHTML = `${(naive.getAccuracy() * 100).toFixed(2)} %`;
-        document.getElementById('recall').innerHTML = `${(naive.getRecall() * 100).toFixed(2)} %`;
-        document.getElementById('precision').innerHTML = `${(naive.getPrecision() * 100).toFixed(2)} %`;
-        document.getElementById('medidaF1').innerHTML = `${(naive.getF1() * 100).toFixed(2)} %`;
+        console.log("aver:", naive.results);
 
+        if(rbSame.checked){
+            MakeTable(naive.matrix);
+            document.getElementById('accuracy').innerHTML = `${(naive.getAccuracy() * 100).toFixed(2)} %`;
+            document.getElementById('recall').innerHTML = `${(naive.getRecall() * 100).toFixed(2)} %`;
+            document.getElementById('precision').innerHTML = `${(naive.getPrecision() * 100).toFixed(2)} %`;
+            document.getElementById('medidaF1').innerHTML = `${(naive.getF1() * 100).toFixed(2)} %`;
+        }
+        else if(rbExt.checked){
+            const table = document.getElementsByClassName("table")[0];
+            const predictionTable = document.getElementById("prediction-table");
+            if(!table){
+                return;
+            }
+            if(predictionTable){
+                predictionTable += MakePredictionTable(naive.results);
+            }
+            else{
+                table.innerHTML += `<p>Predicciones</p>` 
+                table.innerHTML += MakePredictionTable(naive.results);
+            }
+            
+        }
     }
     catch(ex){
 
@@ -140,4 +157,34 @@ function MakeTable(object) {
         </div>
     </div>
     `; 
+}
+
+
+
+const MakePredictionTable = (data) => {
+    const HtmlData =  `<div class="prediction-table" id="prediction-table">
+            ${data.map(item => { 
+                return `<div class="prediction-row">
+                    ${
+                        item.dato.map(result => {
+                            return `<p>${result}</p>` 
+                        }).join('')
+                    }
+                    </div>` 
+            }).join('')}
+        </div>`;
+
+    return HtmlData;
+}
+
+
+
+function Limpiar(){
+    fileInput.value = "";
+    externfileInput.value = "";
+    const table = document.getElementsByClassName("table")[0];
+    table.innerHTML =""
+    table.classList.remove('showing-table');
+    nombreArchivo.innerHTML = "----";
+    datasetNombre.innerHTML = "----"
 }

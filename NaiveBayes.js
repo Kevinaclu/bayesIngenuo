@@ -104,10 +104,10 @@ class NaiveBayes {
         // console.log(this.separatedDataset);
         // console.log(this.class_values);
         // console.log(this.splittedDataset[0].length)
-        console.log(this.intervals);
-        console.log(this.results);
-        console.log(this.matrix);
-        console.log(this.dataset.length);
+        console.log("2",this.intervals);
+        console.log("2",this.results);
+        console.log("2",this.matrix);
+        console.log("2",this.dataset.length);
     }
 
     /**Metodo que realiza la operacion del bayes ingenuo para un dato de los datos de prueba */
