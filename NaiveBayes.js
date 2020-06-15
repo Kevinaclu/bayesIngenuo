@@ -130,12 +130,12 @@ class NaiveBayes {
                         sameClass = this.splittedDataset[i].filter((cl) => {
                             return cl === interval;
                         }).length;
-                        console.log("Same class =>", sameClass);
+                        // console.log("Same class =>", sameClass);
                     } else {
                         sameClass = this.separatedDataset[cv][i].filter((cl) => {
                             return cl === d;
                         }).length;
-                        console.log("Same class =>", sameClass);
+                        // console.log("Same class =>", sameClass);
                     }
                   
                     likelyhood.push(sameClass / class_length);

@@ -163,12 +163,10 @@ function MakeTable(object) {
 
 const MakePredictionTable = (data) => {
     const HtmlData =  `<div class="prediction-table" id="prediction-table">
-            ${data.map(item => { 
+            ${data.map((item, i) => { 
                 return `<div class="prediction-row">
-                    ${
-                        item.dato.map(result => {
-                            return `<p>${result}</p>` 
-                        }).join('')
+                    ${    
+                    `<p>Registro ${i+1}:</p><p>${item.dato[item.dato.length-1]}</p>`   
                     }
                     </div>` 
             }).join('')}
